@@ -1,5 +1,8 @@
 const wrapper = document.getElementById("wrapper")
 const main = document.getElementById('main')
+const newBookButton = document.getElementById('newBook')
+const bookFormBar = document.getElementById('bookFormBar')
+
 const myLibrary = [
     {
         "title": "LOL",
@@ -14,9 +17,6 @@ const myLibrary = [
         "read": "not read"
     }
                 ]
-
-let bookFormVisible = false
-
 
 
 function Book(title, author, pages, read) {
@@ -35,10 +35,6 @@ function Book(title, author, pages, read) {
 // const book1 = new Book("Nabion", "Dayigil", 86, "not read")
 // addBookToLibrary(LOL);
 // addBookToLibrary(book1);
-
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-}
 
 function displayBooks() {
     myLibrary.forEach(book => {
@@ -65,95 +61,40 @@ function displayBooks() {
 
 displayBooks();
 
-function displayForm() {
-    if (bookFormVisible) {
-        const bookFormBar = document.getElementById("bookFormBar")
-        main.removeChild(bookFormBar);
-        bookFormVisible = false;
+newBookButton.addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent button default behavior (form submission)
+
+    // Toggle the form's visibility
+    if (bookFormBar.style.display === "none" || bookFormBar.style.display === "") {
+        bookFormBar.style.display = "block"; // Show the form
     } else {
-        const br = document.createElement("br");
-
-        const bookFormBar = document.createElement(`div`);
-        bookFormBar.setAttribute('id', 'bookFormBar');
-        main.appendChild(bookFormBar);
-    
-        const bookForm = document.createElement(`form`)
-        bookForm.setAttribute("id", "addBook");
-        bookFormBar.appendChild(bookForm);
-
-        const title = document.createElement("input");
-        title.setAttribute("type", "text");
-        title.setAttribute("name", "title");
-        title.setAttribute("placeholder", "Title")
-        title.value = "title";
-        bookForm.appendChild(title);
-
-        const author = document.createElement("input");
-        author.setAttribute("type", "text");
-        author.setAttribute("name", "author");
-        author.setAttribute("placeholder", "Author")
-        author.value = "author";
-        bookForm.appendChild(author);
-
-        const pages = document.createElement("input");
-        pages.setAttribute("type", "number");
-        pages.setAttribute("name", "pages");
-        pages.setAttribute("placeholder", "Number of pages")
-        pages.value = "pages";
-        bookForm.appendChild(pages);
-        
-        const radioContainer = document.createElement("div");
-
-        const radio1 = document.createElement("input");
-        radio1.type = "radio";
-        radio1.name = "read";
-        radio1.value = "read";
-        radio1.id = "read";
-
-        // Create a label for the first radio button
-        const label1 = document.createElement("label");
-        label1.innerHTML = "Read";
-        label1.setAttribute("for", "read");
-
-        // Create the second radio button
-        const radio2 = document.createElement("input");
-        radio2.type = "radio";
-        radio2.name = "read";
-        radio2.value = "not read";
-        radio2.id = "notread";
-
-        // Create a label for the second radio button
-        const label2 = document.createElement("label");
-        label2.innerHTML = "Not read";
-        label2.setAttribute("for", "notread");
-
-        // Append radio buttons and labels to the container
-        bookForm.appendChild(radioContainer);
-        radioContainer.appendChild(radio1);
-        radioContainer.appendChild(label1);
-        radioContainer.appendChild(radio2);
-        radioContainer.appendChild(label2);
-
-        const submit = document.createElement("button");
-        submit.setAttribute("type", "submit");
-        submit.setAttribute("value", "Submit");
-        submit.textContent = "Submit";
-        submit.setAttribute("id", "submit");
-        submit.setAttribute("onclick", "addBookToLibrary()");
-        bookForm.appendChild(submit);
-
-        bookFormVisible = true;
+        bookFormBar.style.display = "none"; // Hide the form
     }
-}
-
-
-
-// stop form submission
-
-const form  = document.getElementById('addBook');
-
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
 });
 
-// 
+document.getElementById('book-form').onsubmit = function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.querySelector('input[name="read"]:checked').value;
+
+    const newBook = new Book(title, author, pages, read);
+    myLibrary.push(newBook);
+
+    // Clear the form inputs after submission
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('pages').value = '';
+    document.querySelector('input[name="read"]:checked').checked = false;
+
+
+    // Update the display after adding a new book
+    wrapper.innerHTML = ''; // Clear the existing content
+    displayBooks(); // Re-render the book cards
+};
+
+
+
+

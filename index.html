@@ -12,10 +12,24 @@
 <body>
     <header>
         <div class="logo">Library</div>
-        <button id="add" onclick="displayForm()">New Book</button>
+        <button id="newBook">New Book</button>
     </header>
     <main id="main">
         <div id="wrapper"></div>
+        <div id="bookFormBar">
+            <form id="book-form">
+                <input type="text" name="title" placeholder="Title" id="title">
+                <input type="text" name="author" placeholder="Author" id="author">
+                <input type="number" name="pages" placeholder="Number of pages" id="pages">
+                <div>
+                    <input type="radio" name="read" value="read" id="read">
+                    <label for="read">Read</label>
+                    <input type="radio" name="read" value="not read" id="notread">
+                    <label for="notread">Not read</label>
+                </div>
+                <button type="submit" value="Submit" id="submit">Submit</button>
+            </form>
+        </div>
     </main>
     <footer>
 
