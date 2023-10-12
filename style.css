@@ -42,12 +42,11 @@ main {
 }
 
 #wrapper {
-    display: grid;
+    display: flex;
     gap: 20px;
     margin: 20px 10px;    
-    grid-auto-flow: column;
-    justify-content: start;
-
+    flex-wrap: wrap;
+    align-content: flex-start;
 }
 
 .card {
@@ -79,7 +78,6 @@ form {
 
 input {
     border: 0;
-    /* background-color: lightgrey; */
     border-radius: 8px;
     padding: 10px;
 }
