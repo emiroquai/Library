@@ -1,4 +1,4 @@
-const wrapper = document.getElementsByClassName("wrapper")
+const wrapper = document.getElementById("wrapper")
 const myLibrary = []
 
 function Book(title, author, pages, read) {
@@ -13,8 +13,38 @@ function Book(title, author, pages, read) {
 }
 
 // constructer test
-// const LOL = new Book("LOL", "Mr. Me", 120, "read")
+const LOL = new Book("LOL", "Mr. Me", 120, "read")
+const book1 = new Book("Nabion", "Dayigil", 86, "not read")
+addBookToLibrary(LOL);
+addBookToLibrary(book1);
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
 }
+
+function displayBooks() {
+    myLibrary.forEach(book => {
+        const bookCard = document.createElement(`div`);
+        wrapper.appendChild(bookCard);
+        bookCard.classList.add('card');
+
+        const bookPages = document.createElement(`div`);
+        bookPages.classList.add('pages');
+        bookCard.appendChild(bookPages)
+        bookPages.textContent = book.pages + " pages"
+
+        const bookAuthor = document.createElement(`div`);
+        bookAuthor.classList.add('author');
+        bookCard.insertBefore(bookAuthor, bookPages);
+        bookAuthor.textContent = "by " + book.author;
+
+        const bookTitle = document.createElement(`div`);
+        bookTitle.classList.add('title');
+        bookCard.insertBefore(bookTitle, bookAuthor);
+        bookTitle.textContent = book.title;
+
+
+    });
+}
+
+displayBooks();
