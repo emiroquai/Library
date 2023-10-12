@@ -2,21 +2,9 @@ const wrapper = document.getElementById("wrapper")
 const main = document.getElementById('main')
 const newBookButton = document.getElementById('newBook')
 const bookFormBar = document.getElementById('bookFormBar')
+const bookForm = document.getElementById('book-form')
 
-const myLibrary = [
-    {
-        "title": "LOL",
-        "author": "Mr. Me",
-        "pages": 120,
-        "read": "read"
-    },               
-    {
-        "title": "Nabion",
-        "author": "Dayigil",
-        "pages": 86,
-        "read": "not read"
-    }
-                ]
+const myLibrary = []
 
 
 function Book(title, author, pages, read) {
@@ -39,23 +27,26 @@ function Book(title, author, pages, read) {
 function displayBooks() {
     myLibrary.forEach(book => {
         const bookCard = document.createElement(`div`);
-        wrapper.appendChild(bookCard);
         bookCard.classList.add('card');
-
-        const bookPages = document.createElement(`div`);
-        bookPages.classList.add('pages');
-        bookCard.appendChild(bookPages)
-        bookPages.textContent = book.pages + " pages"
-
-        const bookAuthor = document.createElement(`div`);
-        bookAuthor.classList.add('author');
-        bookCard.insertBefore(bookAuthor, bookPages);
-        bookAuthor.textContent = "by " + book.author;
 
         const bookTitle = document.createElement(`div`);
         bookTitle.classList.add('title');
-        bookCard.insertBefore(bookTitle, bookAuthor);
         bookTitle.textContent = book.title;
+        
+        const bookAuthor = document.createElement(`div`);
+        bookAuthor.classList.add('author');
+        bookAuthor.textContent = "by " + book.author;
+        
+        const bookPages = document.createElement(`div`);
+        bookPages.classList.add('pages');
+        bookPages.textContent = book.pages + " pages"
+        
+        bookCard.appendChild(bookTitle);
+        bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookPages);
+
+        wrapper.appendChild(bookCard);
+
     });
 }
 
@@ -72,9 +63,10 @@ newBookButton.addEventListener("click", function(event) {
     }
 });
 
-document.getElementById('book-form').onsubmit = function(event) {
+bookForm.onsubmit = function(event) {
     event.preventDefault(); // Prevent form submission
 
+    // Get input values from the form and push it to the array
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const pages = document.getElementById('pages').value;
