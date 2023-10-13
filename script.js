@@ -9,7 +9,7 @@ const myLibrary = [
         "title": "Cero Baby",
         "author": "Emiro",
         "pages": "999",
-        "read": "not read"
+        "read": "Not read"
     }
 ]
 
@@ -25,10 +25,12 @@ function Book(title, author, pages, read) {
     console.log(this.info());
 }
 
+updateDisplay();
+
 function displayBooks() {
 
     wrapper.innerHTML = "";
-    myLibrary.forEach((book, index) => {
+    myLibrary.forEach((book, index, read) => {
         // Create a card for each book
         const bookCard = document.createElement(`div`);
         bookCard.classList.add('card');
@@ -45,6 +47,11 @@ function displayBooks() {
         bookPages.classList.add('pages');
         bookPages.textContent = book.pages + " pages"
 
+        const readButton = document.createElement(`button`);
+        readButton.classList.add("readButton");
+        readButton.textContent = book.read;
+        readButton.dataset.index = index;
+
         const deleteButton = document.createElement(`button`);
         deleteButton.classList.add("deleteButton");
         deleteButton.textContent = "X";
@@ -53,14 +60,13 @@ function displayBooks() {
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
         bookCard.appendChild(bookPages);
+        bookCard.appendChild(readButton);
         bookCard.appendChild(deleteButton);
 
         wrapper.appendChild(bookCard);
 
     });
 }
-
-displayBooks();
 
 newBookButton.addEventListener("click", function(event) {
     event.preventDefault(); // Prevent button default behavior (form submission)
@@ -95,8 +101,7 @@ bookForm.onsubmit = function(event) {
     // Update the display after adding a new book
     wrapper.innerHTML = ''; // Clear the existing content
     bookFormBar.style.display = "none"; // Hide the form
-    displayBooks(); // Re-render the book cards
-    deleteBook();
+    updateDisplay();
 };
 
 function deleteBook() {
@@ -106,10 +111,29 @@ function deleteBook() {
             const index = parseInt(deleteButton.dataset.index);
             myLibrary.splice(index, 1);
             console.log(myLibrary);
-            displayBooks(); 
-            deleteBook();
+            updateDisplay();
         });
     });
 }
 
-deleteBook();
+function readButton() {
+    const readButtons = document.querySelectorAll('button.readButton');
+    readButtons.forEach((readButton) => {
+        readButton.addEventListener('click', () => {
+            const index = parseInt(readButton.dataset.index);
+            if (myLibrary[index].read === "Read") {
+                myLibrary[index].read = "Not read";
+            } else {
+                myLibrary[index].read = "Read";
+            }
+            updateDisplay();
+            
+        });
+    });
+}
+
+function updateDisplay() {
+    displayBooks();
+    deleteBook();
+    readButton();
+}
