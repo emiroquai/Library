@@ -47,21 +47,30 @@ function displayBooks() {
         bookPages.classList.add('pages');
         bookPages.textContent = book.pages + " pages"
 
-        const readButton = document.createElement(`button`);
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
+        const readButton = document.createElement("button");
         readButton.classList.add("readButton");
         readButton.textContent = book.read;
+        if (book.read === "Read") {
+            readButton.classList.add("read");
+        }
         readButton.dataset.index = index;
 
-        const deleteButton = document.createElement(`button`);
+        const deleteButton = document.createElement("button");
         deleteButton.classList.add("deleteButton");
         deleteButton.textContent = "X";
         deleteButton.dataset.index = index;
+
+        buttonContainer.appendChild(readButton);
+        buttonContainer.appendChild(deleteButton);
         
         bookCard.appendChild(bookTitle);
         bookCard.appendChild(bookAuthor);
         bookCard.appendChild(bookPages);
-        bookCard.appendChild(readButton);
-        bookCard.appendChild(deleteButton);
+        bookCard.appendChild(buttonContainer);
+  
 
         wrapper.appendChild(bookCard);
 
@@ -123,8 +132,10 @@ function readButton() {
             const index = parseInt(readButton.dataset.index);
             if (myLibrary[index].read === "Read") {
                 myLibrary[index].read = "Not read";
+                readButton.classList.remove('read');
             } else {
                 myLibrary[index].read = "Read";
+                readButton.classList.add('read');
             }
             updateDisplay();
             

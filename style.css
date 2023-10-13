@@ -25,7 +25,7 @@ header {
 
 }
 
-#newBook {
+#newBook, #submit {
     width: 100px;
     height: 30px;
     border-radius: 8px;
@@ -43,6 +43,8 @@ header {
 main {
     display: grid;
     grid-auto-flow: column;
+    height: 100vh;
+    background-color: antiquewhite;
 }
 
 #wrapper {
@@ -54,23 +56,30 @@ main {
 }
 
 .card {
-    background-color: azure;
+    background-color: #b1b1b1;
     border-radius: 16px;
     padding: 20px 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: grid;
     gap: 10px;
     width: clamp(120px, 20vw ,200px);
-    border-top: 8px solid lightgreen;
-    border-right: 10px solid lightgreen;
-}
+    border-top: 7px solid orange;
+    border-right: 7px solid orange;}
 
 #bookFormBar {
-    width: 300px;
+    width: 220px;
     background-color: rgba(255, 166, 0, 0.699);
     height: 100vh;
     justify-self: end;
     display: none;
+    justify-content: center;
+}
+
+#submit {
+    width: fit-content;
+    padding: 3px 10px;
+    cursor: pointer;
+    justify-self: center;
 }
 
 form {
@@ -95,3 +104,26 @@ input {
     justify-self: end;
     cursor: pointer;
 }
+
+.button-container {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: end;
+    gap: 10px;
+    align-items: center
+}
+
+.readButton {
+    width: fit-content;
+    padding: 3px 10px;
+    background-color: #d9d9d9;
+    display: inline-flex;
+    border-radius: 8px;
+    border: 2px solid red;
+    cursor: pointer;
+}
+
+.read {
+    border: 2px solid lightgreen;
+}
+
